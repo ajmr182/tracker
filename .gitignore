@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local config
+local.properties
+
+# IDE
+.idea/
+*.iml
+
+# Mac
+.DS_Store
+
+# Build outputs
+*.apk
+*.aab
+
+# Logs
+*.log
+
+# Keystore
+*.jks
+*.keystore
