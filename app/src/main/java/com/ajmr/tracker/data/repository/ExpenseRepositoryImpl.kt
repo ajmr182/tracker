@@ -8,11 +8,7 @@ import javax.inject.Inject
 
 class ExpenseRepositoryImpl @Inject constructor(private val dao: ExpenseDao): ExpenseRepository {
 
-    override fun getExpenses(): Flow<List<Expense>> {
-        TODO("Not yet implemented")
-    }
+    override fun getExpenses(): Flow<List<Expense>> = dao.getExpenses()
 
-    override suspend fun addExpense(expense: Expense) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun addExpense(expense: Expense) = dao.insertExpense(expense)
 }
