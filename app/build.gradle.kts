@@ -64,4 +64,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.room)
     ksp(libs.room.compiler)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockk)
 }
