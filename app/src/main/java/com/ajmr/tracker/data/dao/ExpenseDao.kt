@@ -3,15 +3,15 @@ package com.ajmr.tracker.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExpenseDao {
 
-    @Query("SELECT * FROM Expense")
-    fun getExpenses(): Flow<List<Expense>>
+    @Query("SELECT * FROM `Transaction`")
+    fun getTransactions(): Flow<List<Transaction>>
 
     @Insert
-    suspend fun insertExpense(expense: Expense)
+    suspend fun insertTransactions(transaction: Transaction)
 }

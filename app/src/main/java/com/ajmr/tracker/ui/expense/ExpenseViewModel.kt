@@ -2,7 +2,8 @@ package com.ajmr.tracker.ui.expense
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.domain.repository.ExpenseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,9 +32,10 @@ class ExpenseViewModel @Inject constructor(
     val uiState: StateFlow<ExpenseUiState> = userId
         .filterNotNull()
         .flatMapLatest {
-            expenseRepository.getExpenses()
+            expenseRepository.getTransactions()
                 .map { expenses ->
-                    ExpenseUiState(expenses = expenses)
+                    val filtered = expenses.filter { TransactionType.EXPENSE == it.transactionType }
+                    ExpenseUiState(expenses = filtered)
                 }
                 .onStart {
                     emit(ExpenseUiState(isLoading = true))
@@ -53,7 +55,7 @@ class ExpenseViewModel @Inject constructor(
 
     fun onEvent(event: ExpenseEvent) {
         when (event) {
-            is ExpenseEvent.OnSaveExpense -> saveExpense(event.expense)
+            is ExpenseEvent.OnSaveExpense -> saveExpense(event.transaction)
         }
     }
 
@@ -61,9 +63,9 @@ class ExpenseViewModel @Inject constructor(
         userId.value = id
     }
 
-    private fun saveExpense(expense: Expense) = viewModelScope.launch {
+    private fun saveExpense(transaction: Transaction) = viewModelScope.launch {
         try {
-            expenseRepository.addExpense(expense)
+            expenseRepository.insertTransaction(transaction)
         } catch (e: Exception) {
             _events.emit(ExpenseViewEffect.ShowError("error de guardado"))
         }

@@ -1,11 +1,11 @@
 package com.ajmr.tracker.domain.repository
 
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
 import kotlinx.coroutines.flow.Flow
 
 interface ExpenseRepository {
 
-    fun getExpenses(): Flow<List<Expense>>
+    fun getTransactions(): Flow<List<Transaction>>
 
-    suspend fun addExpense(expense: Expense)
+    suspend fun insertTransaction(transaction: Transaction)
 }
