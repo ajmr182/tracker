@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ajmr.tracker.ui.expense.ExpenseScreen
+import com.ajmr.tracker.ui.home.HomeScreen
 import com.ajmr.tracker.ui.theme.TrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TrackerTheme {
-                ExpenseScreen()
+                HomeScreen()
             }
         }
     }
