@@ -1,6 +1,8 @@
 package com.ajmr.tracker.domain.model
 
-enum class TransactionType{
-    INCOME,
-    EXPENSE
+import com.ajmr.tracker.R
+
+enum class TransactionType(val label: Int) {
+    INCOME(label = R.string.income),
+    EXPENSE(label = R.string.expense),
 }
