@@ -1,9 +1,9 @@
 package com.ajmr.tracker.ui.expense
 
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
 
 data class ExpenseUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
-    val expenses: List<Expense> = emptyList(),
+    val expenses: List<Transaction> = emptyList(),
 )

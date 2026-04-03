@@ -2,11 +2,9 @@ package com.ajmr.tracker.ui.expense
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
-import com.ajmr.tracker.data.entity.Expense
-import junit.framework.TestCase.assertTrue
+import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.TransactionType
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,16 +17,18 @@ class ExpenseScreenContentTest {
     fun whenthereareexpensestheyaredisplayedonthescreen() {
 
         val expenses = listOf(
-            Expense(
+            Transaction(
                 amount = 20.0,
                 description = "parrilla",
                 category = "comida",
+                transactionType = TransactionType.EXPENSE,
                 date = 123456789
             ),
-            Expense(
+            Transaction(
                 amount = 20.0,
                 description = "taxi",
                 category = "transporte",
+                transactionType = TransactionType.EXPENSE,
                 date = 123456789
             )
         )

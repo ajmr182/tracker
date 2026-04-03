@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
 
 @Composable
 fun ExpenseScreen() {
@@ -56,7 +56,7 @@ fun ExpenseScreen() {
 
 
 @Composable
-fun ExpenseScreenContent(expenses: List<Expense>, saveExpense: (Expense) -> Unit) {
+fun ExpenseScreenContent(expenses: List<Transaction>, saveExpense: (Transaction) -> Unit) {
     Scaffold(floatingActionButton = {
         FloatingActionButton(
             modifier = Modifier.clip(ShapeDefaults.ExtraLarge),

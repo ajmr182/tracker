@@ -1,7 +1,8 @@
 package com.ajmr.tracker.ui.expense
 
 import app.cash.turbine.test
-import com.ajmr.tracker.data.entity.Expense
+import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.domain.repository.ExpenseRepository
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -39,7 +40,13 @@ class ExpenseViewModelTest {
     fun `When repo emits data, uiState is updated`() = runTest {
 
         val list = listOf(
-            Expense(amount = 20.0, description = "parrilla", category = "comida", date = 123456789)
+            Transaction(
+                amount = 20.0,
+                description = "parrilla",
+                category = "comida",
+                transactionType = TransactionType.EXPENSE,
+                date = 123456789
+            )
         )
 
         viewModel.uiState.test {
@@ -65,18 +72,19 @@ class ExpenseViewModelTest {
         val repository = mockk<ExpenseRepository>(relaxed = true)
         val viewModel = ExpenseViewModel(repository)
 
-        val expense = Expense(
+        val transaction = Transaction(
             amount = 20.0,
             description = "parrilla",
             category = "comida",
+            transactionType = TransactionType.EXPENSE,
             date = 123456789
         )
 
-        viewModel.onEvent(ExpenseEvent.OnSaveExpense(expense))
+        viewModel.onEvent(ExpenseEvent.OnSaveExpense(transaction))
         advanceUntilIdle()
 
         coVerify {
-            repository.addExpense(expense)
+            repository.insertTransaction(transaction)
         }
     }
 }
