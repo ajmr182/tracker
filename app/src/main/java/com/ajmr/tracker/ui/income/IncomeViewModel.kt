@@ -1,4 +1,4 @@
-package com.ajmr.tracker.ui.expense
+package com.ajmr.tracker.ui.income
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,15 +24,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExpenseViewModel @Inject constructor(
+class IncomeViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
     private val userId = MutableStateFlow<String?>(null)
 
-    private val _uiState = MutableStateFlow(ExpenseUiState())
+    private val _uiState = MutableStateFlow(IncomeUiState())
     @OptIn(ExperimentalCoroutinesApi::class)
-    val uiState: StateFlow<ExpenseUiState> = userId
+    val uiState: StateFlow<IncomeUiState> = userId
         .filterNotNull()
         .flatMapLatest {
             transactionRepository.getTransactions()
@@ -50,36 +50,36 @@ class ExpenseViewModel @Inject constructor(
                 }
                 .map { expenses ->
                     expenses.filter {
-                        it.transactionType == TransactionType.EXPENSE
+                        it.transactionType == TransactionType.INCOME
                     }
                 }
         }
         .combine(_uiState) { expenses, currentState ->
             currentState.copy(
-                expenses = expenses,
+                incomes = expenses,
                 isLoading = false
             )
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            ExpenseUiState()
+            IncomeUiState()
         )
 
 
-    private val _events = MutableSharedFlow<ExpenseViewEffect>()
-    val events: SharedFlow<ExpenseViewEffect> = _events
+    private val _events = MutableSharedFlow<IncomeViewEffect>()
+    val events: SharedFlow<IncomeViewEffect> = _events
 
-    fun onEvent(event: ExpenseEvent) {
+    fun onEvent(event: IncomeEvent) {
         when (event) {
-            is ExpenseEvent.OnSaveExpense -> saveExpense(
+            is IncomeEvent.OnSaveIncome -> saveExpense(
                 event.description,
                 event.amount,
                 event.category
             )
 
-            ExpenseEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
-            ExpenseEvent.OnDismissAddDialog -> _uiState.update { it.copy(showAddDialog = false) }
+            IncomeEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
+            IncomeEvent.OnDismissAddDialog -> _uiState.update { it.copy(showAddDialog = false) }
         }
     }
 
@@ -94,11 +94,11 @@ class ExpenseViewModel @Inject constructor(
                     amount = amount,
                     category = category,
                     description = description,
-                    transactionType = TransactionType.EXPENSE
+                    transactionType = TransactionType.INCOME
                 )
                 transactionRepository.insertTransaction(transaction)
             } catch (e: Exception) {
-                _events.emit(ExpenseViewEffect.ShowError("error de guardado"))
+                _events.emit(IncomeViewEffect.ShowError("error de guardado"))
             }
         }
 }

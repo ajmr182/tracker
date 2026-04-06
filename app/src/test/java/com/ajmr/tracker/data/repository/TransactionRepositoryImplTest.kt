@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class ExpenseRepositoryImplTest {
+class TransactionRepositoryImplTest {
 
     @Test
     fun `getExpenses returns data from the DAO`() = runTest {
@@ -30,7 +30,7 @@ class ExpenseRepositoryImplTest {
         val dao = mockk<ExpenseDao>()
         every { dao.getTransactions() } returns flow
 
-        val repo = ExpenseRepositoryImpl(dao)
+        val repo = TransactionRepositoryImpl(dao)
 
         val result = repo.getTransactions().first()
 
@@ -52,7 +52,7 @@ class ExpenseRepositoryImplTest {
         val dao = mockk<ExpenseDao>()
         every { dao.getTransactions() } returns flowOf(list)
 
-        val repository = ExpenseRepositoryImpl(dao)
+        val repository = TransactionRepositoryImpl(dao)
 
         repository.getTransactions().test {
             val item = awaitItem()
