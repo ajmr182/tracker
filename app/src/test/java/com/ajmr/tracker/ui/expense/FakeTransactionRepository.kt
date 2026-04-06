@@ -1,11 +1,11 @@
 package com.ajmr.tracker.ui.expense
 
 import com.ajmr.tracker.data.entity.Transaction
-import com.ajmr.tracker.domain.repository.ExpenseRepository
+import com.ajmr.tracker.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class FakeExpenseRepository : ExpenseRepository {
+class FakeTransactionRepository : TransactionRepository {
 
     private val flow = MutableSharedFlow<List<Transaction>>(replay = 1)
 

@@ -1,7 +1,7 @@
 package com.ajmr.tracker.di
 
-import com.ajmr.tracker.data.repository.ExpenseRepositoryImpl
-import com.ajmr.tracker.domain.repository.ExpenseRepository
+import com.ajmr.tracker.data.repository.TransactionRepositoryImpl
+import com.ajmr.tracker.domain.repository.TransactionRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindExpenseRepository(
-        impl: ExpenseRepositoryImpl
-    ): ExpenseRepository
+        impl: TransactionRepositoryImpl
+    ): TransactionRepository
 }

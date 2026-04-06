@@ -1,4 +1,4 @@
-package com.ajmr.tracker.ui.expense
+package com.ajmr.tracker.ui.income
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -9,34 +9,34 @@ import com.ajmr.tracker.ui.transaction.TransactionScreenContent
 import org.junit.Rule
 import org.junit.Test
 
-class ExpenseScreenContentTest {
+class IncomeScreenTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun whenthereareexpensestheyaredisplayedonthescreen() {
+    fun whenthereareincomestheyaredisplayedonthescreen() {
 
-        val expenses = listOf(
+        val incomes = listOf(
             Transaction(
                 amount = 20.0,
                 description = "parrilla",
                 category = "comida",
-                transactionType = TransactionType.EXPENSE,
+                transactionType = TransactionType.INCOME,
                 date = 123456789
             ),
             Transaction(
                 amount = 20.0,
                 description = "taxi",
                 category = "transporte",
-                transactionType = TransactionType.EXPENSE,
+                transactionType = TransactionType.INCOME,
                 date = 123456789
             )
         )
 
         composeTestRule.setContent {
             TransactionScreenContent(
-                transactions = expenses,
+                transactions = incomes,
                 onAddClicked = {  }
             )
         }
