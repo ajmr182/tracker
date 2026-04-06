@@ -30,7 +30,10 @@ import com.ajmr.tracker.domain.model.TransactionType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTransactionTypeDialog(onDisMissRequest: () -> Unit, onSaveTransaction: () -> Unit) {
+fun AddTransactionTypeDialog(
+    onDisMissRequest: () -> Unit,
+    onSaveTransaction: (description: String, amount: Double, category: String) -> Unit,
+) {
 
     var description by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
@@ -41,7 +44,7 @@ fun AddTransactionTypeDialog(onDisMissRequest: () -> Unit, onSaveTransaction: ()
     var expanded by remember { mutableStateOf(false) }
 
     BasicAlertDialog(
-        onDismissRequest = {}
+        onDismissRequest = onDisMissRequest,
     ) {
         Card(
             modifier = Modifier.padding(16.dp)
@@ -58,17 +61,17 @@ fun AddTransactionTypeDialog(onDisMissRequest: () -> Unit, onSaveTransaction: ()
                 Spacer(modifier = Modifier.height(12.dp))
 
                 OutlinedTextField(
-                    value = amount,
-                    onValueChange = { amount = it },
-                    label = { Text(stringResource(R.string.amount)) }
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text(stringResource(R.string.description)) }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = description,
-                    onValueChange = { description = it },
-                    label = { Text(stringResource(R.string.description)) }
+                    value = amount,
+                    onValueChange = { amount = it },
+                    label = { Text(stringResource(R.string.amount)) }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -113,7 +116,8 @@ fun AddTransactionTypeDialog(onDisMissRequest: () -> Unit, onSaveTransaction: ()
 
                 Button(
                     onClick = {
-
+                        onSaveTransaction(description, amount.toDouble(), selectedType.name)
+                        onDisMissRequest()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -127,5 +131,5 @@ fun AddTransactionTypeDialog(onDisMissRequest: () -> Unit, onSaveTransaction: ()
 @Preview
 @Composable
 fun AddTransactionTypeDialogPreview() {
-    AddTransactionTypeDialog(onDisMissRequest = {}, onSaveTransaction = {})
+    AddTransactionTypeDialog(onDisMissRequest = {}, onSaveTransaction = { description, amount, category -> })
 }

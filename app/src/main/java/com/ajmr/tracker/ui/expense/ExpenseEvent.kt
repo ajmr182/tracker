@@ -1,8 +1,10 @@
 package com.ajmr.tracker.ui.expense
 
-import com.ajmr.tracker.data.entity.Transaction
-
 sealed interface ExpenseEvent {
 
-    data class OnSaveExpense(val transaction: Transaction) : ExpenseEvent
+    data class OnSaveExpense(val description: String, val amount: Double, val category: String) : ExpenseEvent
+
+    object OnAddClicked : ExpenseEvent
+
+    object OnDismissAddDialog : ExpenseEvent
 }

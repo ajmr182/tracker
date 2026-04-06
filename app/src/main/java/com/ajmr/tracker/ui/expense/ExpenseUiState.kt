@@ -6,4 +6,5 @@ data class ExpenseUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val expenses: List<Transaction> = emptyList(),
+    val showAddDialog: Boolean = false,
 )

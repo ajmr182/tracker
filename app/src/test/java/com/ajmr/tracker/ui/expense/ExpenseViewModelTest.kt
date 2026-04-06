@@ -49,20 +49,19 @@ class ExpenseViewModelTest {
             )
         )
 
+        viewModel.setUserId("123")
+
         viewModel.uiState.test {
 
-            viewModel.setUserId("123")
-
-            skipItems(1)
-
-            val loading = awaitItem()
-            assert(loading.isLoading)
+            val initial = awaitItem()
+            assert(!initial.isLoading)
+            assert(initial.expenses.isEmpty())
 
             fakeRepo.emitExpenses(list)
-            advanceUntilIdle()
 
             val updated = awaitItem()
             assert(updated.expenses == list)
+            assert(!updated.isLoading)
         }
     }
 
@@ -80,11 +79,17 @@ class ExpenseViewModelTest {
             date = 123456789
         )
 
-        viewModel.onEvent(ExpenseEvent.OnSaveExpense(transaction))
+        viewModel.onEvent(
+            ExpenseEvent.OnSaveExpense(
+                transaction.description, transaction.amount, transaction.category
+            )
+        )
         advanceUntilIdle()
 
         coVerify {
-            repository.insertTransaction(transaction)
+            repository.insertTransaction(match {
+                it.amount == transaction.amount && it.description == transaction.description && it.category == transaction.category && it.transactionType == transaction.transactionType
+            })
         }
     }
 }
