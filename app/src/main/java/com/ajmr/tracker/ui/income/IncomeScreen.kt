@@ -7,6 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.ui.components.AddTransactionTypeDialog
 import com.ajmr.tracker.ui.transaction.TransactionScreenContent
 
@@ -43,6 +44,7 @@ fun IncomeScreen() {
 
     if (state.showAddDialog) {
         AddTransactionTypeDialog(
+            transactionType = TransactionType.INCOME,
             onDisMissRequest = {
                 viewModel.onEvent(IncomeEvent.OnDismissAddDialog)
             },

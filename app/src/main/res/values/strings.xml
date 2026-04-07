@@ -7,4 +7,19 @@
     <string name="save">Save</string>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
+    <string name="salary">Salary</string>
+    <string name="services">Services</string>
+    <string name="investments">Investments</string>
+    <string name="gifts">Gifts</string>
+    <string name="refunds">Refunds</string>
+    <string name="other_incomes">Other Incomes</string>
+    <string name="food">Food</string>
+    <string name="house">House</string>
+    <string name="transport">Transport</string>
+    <string name="shopping">Shopping</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="health">Health</string>
+    <string name="education">Education</string>
+    <string name="credits">Credits</string>
+    <string name="other_expenses">Other Expenses</string>
 </resources>

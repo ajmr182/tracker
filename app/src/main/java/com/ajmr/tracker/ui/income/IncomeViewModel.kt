@@ -3,6 +3,7 @@ package com.ajmr.tracker.ui.income
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.domain.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,8 +88,11 @@ class IncomeViewModel @Inject constructor(
         userId.value = id
     }
 
-    private fun saveExpense(description: String, amount: Double, category: String) =
-        viewModelScope.launch {
+    private fun saveExpense(
+        description: String,
+        amount: Double,
+        category: Categories,
+    ) = viewModelScope.launch {
             try {
                 val transaction = Transaction(
                     amount = amount,

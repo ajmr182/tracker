@@ -5,12 +5,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.ui.components.AddTransactionTypeDialog
 import com.ajmr.tracker.ui.transaction.TransactionScreenContent
 
@@ -47,6 +44,7 @@ fun ExpenseScreen() {
 
     if (state.showAddDialog) {
         AddTransactionTypeDialog(
+            transactionType = TransactionType.EXPENSE,
             onDisMissRequest = {
                 viewModel.onEvent(ExpenseEvent.OnDismissAddDialog)
             },

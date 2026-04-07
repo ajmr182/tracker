@@ -2,6 +2,7 @@ package com.ajmr.tracker.ui.expense
 
 import app.cash.turbine.test
 import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.domain.repository.TransactionRepository
 import io.mockk.coVerify
@@ -43,7 +44,7 @@ class ExpenseViewModelTest {
             Transaction(
                 amount = 20.0,
                 description = "parrilla",
-                category = "comida",
+                category = Categories.FOOD,
                 transactionType = TransactionType.EXPENSE,
                 date = 123456789
             )
@@ -74,7 +75,7 @@ class ExpenseViewModelTest {
         val transaction = Transaction(
             amount = 20.0,
             description = "parrilla",
-            category = "comida",
+            category = Categories.FOOD,
             transactionType = TransactionType.EXPENSE,
             date = 123456789
         )

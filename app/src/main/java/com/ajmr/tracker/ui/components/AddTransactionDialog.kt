@@ -26,20 +26,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ajmr.tracker.R
+import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTransactionTypeDialog(
+    transactionType: TransactionType,
     onDisMissRequest: () -> Unit,
-    onSaveTransaction: (description: String, amount: Double, category: String) -> Unit,
+    onSaveTransaction: (description: String, amount: Double, category: Categories) -> Unit,
 ) {
 
     var description by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
 
-    val transactionTypes = listOf(TransactionType.INCOME, TransactionType.EXPENSE)
-    var selectedType by remember { mutableStateOf(TransactionType.INCOME) }
+    val categories = Categories.entries.filter { it.transactionType == transactionType }
+    var selectedType by remember { mutableStateOf(categories.first()) }
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -100,7 +102,7 @@ fun AddTransactionTypeDialog(
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
-                        transactionTypes.forEach { item ->
+                        categories.forEach { item ->
                             DropdownMenuItem(
                                 text = { Text(stringResource(item.label)) },
                                 onClick = {
@@ -116,7 +118,7 @@ fun AddTransactionTypeDialog(
 
                 Button(
                     onClick = {
-                        onSaveTransaction(description, amount.toDouble(), selectedType.name)
+                        onSaveTransaction(description, amount.toDouble(), selectedType)
                         onDisMissRequest()
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -131,5 +133,5 @@ fun AddTransactionTypeDialog(
 @Preview
 @Composable
 fun AddTransactionTypeDialogPreview() {
-    AddTransactionTypeDialog(onDisMissRequest = {}, onSaveTransaction = { description, amount, category -> })
+    AddTransactionTypeDialog(onDisMissRequest = {}, onSaveTransaction = { description, amount, category -> }, transactionType = TransactionType.INCOME)
 }
