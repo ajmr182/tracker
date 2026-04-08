@@ -6,16 +6,17 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation3.runtime.rememberNavBackStack
-import com.ajmr.tracker.ui.navigation.IncomeRoute
+import com.ajmr.tracker.ui.navigation.TransactionRoute
 import com.ajmr.tracker.ui.navigation.NavDisplay
 
 @Composable
 fun HomeScreen() {
 
-    val backStack = rememberNavBackStack(IncomeRoute)
-    val bottomNavItems = listOf(HomeMenu.Income, HomeMenu.Expenses)
+    val backStack = rememberNavBackStack(TransactionRoute)
+    val bottomNavItems = listOf(HomeMenu.Income)
 
     val currentDestination = backStack.lastOrNull()
 
@@ -36,10 +37,10 @@ fun HomeScreen() {
                         icon = {
                             Icon(
                                 destination.icon,
-                                contentDescription = destination.label
+                                contentDescription = ""
                             )
                         },
-                        label = { Text(destination.label) }
+                        label = { Text(stringResource(destination.label)) }
                     )
                 }
             }

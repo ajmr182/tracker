@@ -8,8 +8,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.ajmr.tracker.ui.expense.ExpenseScreen
-import com.ajmr.tracker.ui.income.IncomeScreen
+import com.ajmr.tracker.ui.transaction.IncomeScreen
 
 @Composable
 fun NavDisplay(backStack: NavBackStack<NavKey>, paddingValues: PaddingValues) {
@@ -18,11 +17,8 @@ fun NavDisplay(backStack: NavBackStack<NavKey>, paddingValues: PaddingValues) {
         backStack = backStack,
         modifier = Modifier.padding(paddingValues),
         entryProvider = entryProvider {
-            entry<IncomeRoute> {
+            entry<TransactionRoute> {
                 IncomeScreen()
-            }
-            entry<ExpensesRoute> {
-                ExpenseScreen()
             }
         }
     )

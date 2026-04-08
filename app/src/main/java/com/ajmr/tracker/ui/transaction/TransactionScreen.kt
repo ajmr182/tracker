@@ -1,4 +1,4 @@
-package com.ajmr.tracker.ui.expense
+package com.ajmr.tracker.ui.transaction
 
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -9,12 +9,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.ui.components.AddTransactionTypeDialog
-import com.ajmr.tracker.ui.transaction.TransactionScreenContent
 
 @Composable
-fun ExpenseScreen() {
+fun IncomeScreen() {
 
-    val viewModel: ExpenseViewModel = hiltViewModel()
+    val viewModel: TransactionViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
@@ -24,7 +23,7 @@ fun ExpenseScreen() {
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                is ExpenseViewEffect.ShowError -> {
+                is TransactionViewEffect.ShowError -> {
 
                 }
             }
@@ -37,19 +36,20 @@ fun ExpenseScreen() {
         !state.error.isNullOrEmpty() -> Text("error")
 
         else -> TransactionScreenContent(
-            transactions = state.expenses,
-            onAddClicked = { viewModel.onEvent(ExpenseEvent.OnAddClicked) },
+            incomes = state.incomes,
+            expenses = state.expenses,
+            onAddClicked = { viewModel.onEvent(TransactionEvent.OnAddClicked) },
         )
     }
 
     if (state.showAddDialog) {
         AddTransactionTypeDialog(
-            transactionType = TransactionType.EXPENSE,
+            transactionType = TransactionType.INCOME,
             onDisMissRequest = {
-                viewModel.onEvent(ExpenseEvent.OnDismissAddDialog)
+                viewModel.onEvent(TransactionEvent.OnDismissAddDialog)
             },
             onSaveTransaction = { description, amount, category ->
-                viewModel.onEvent(ExpenseEvent.OnSaveExpense(description, amount, category))
+                viewModel.onEvent(TransactionEvent.OnSaveTransaction(description, amount, category))
             }
         )
     }
