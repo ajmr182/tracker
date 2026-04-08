@@ -1,11 +1,10 @@
-package com.ajmr.tracker.ui.income
+package com.ajmr.tracker.ui.transaction
 
 import app.cash.turbine.test
 import com.ajmr.tracker.data.entity.Transaction
 import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.domain.repository.TransactionRepository
-import com.ajmr.tracker.ui.expense.FakeTransactionRepository
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -20,17 +19,17 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class IncomeViewModelTest {
+class TransactionViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     private lateinit var fakeRepo: FakeTransactionRepository
-    private lateinit var viewModel: IncomeViewModel
+    private lateinit var viewModel: TransactionViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
         fakeRepo = FakeTransactionRepository()
-        viewModel = IncomeViewModel(fakeRepo)
+        viewModel = TransactionViewModel(fakeRepo)
     }
 
     @After
@@ -65,7 +64,7 @@ class IncomeViewModelTest {
     @Test
     fun `When OnSaveExpense is triggered, the repository is called`() = runTest {
         val repository = mockk<TransactionRepository>(relaxed = true)
-        val viewModel = IncomeViewModel(repository)
+        val viewModel = TransactionViewModel(repository)
 
         val transaction = Transaction(
             amount = 20.0,
@@ -75,7 +74,7 @@ class IncomeViewModelTest {
             date = 123456789
         )
 
-        viewModel.onEvent(IncomeEvent.OnSaveIncome(transaction.description, transaction.amount, transaction.category))
+        viewModel.onEvent(TransactionEvent.OnSaveTransaction(transaction.description, transaction.amount, transaction.category))
 
         advanceUntilIdle()
 

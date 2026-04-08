@@ -1,4 +1,4 @@
-package com.ajmr.tracker.ui.expense
+package com.ajmr.tracker.ui.transaction
 
 import com.ajmr.tracker.data.entity.Transaction
 import com.ajmr.tracker.domain.repository.TransactionRepository

@@ -5,8 +5,8 @@
     <string name="description">Description</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="save">Save</string>
-    <string name="income">Income</string>
-    <string name="expense">Expense</string>
+    <string name="income">Incomes</string>
+    <string name="expense">Expenses</string>
     <string name="salary">Salary</string>
     <string name="services">Services</string>
     <string name="investments">Investments</string>
@@ -22,4 +22,6 @@
     <string name="education">Education</string>
     <string name="credits">Credits</string>
     <string name="other_expenses">Other Expenses</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="transactions">Transactions</string>
 </resources>

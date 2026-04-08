@@ -1,4 +1,4 @@
-package com.ajmr.tracker.ui.income
+package com.ajmr.tracker.ui.transaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -25,15 +24,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class IncomeViewModel @Inject constructor(
+class TransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
     private val userId = MutableStateFlow<String?>(null)
 
-    private val _uiState = MutableStateFlow(IncomeUiState())
+    private val _uiState = MutableStateFlow(TransactionUiState())
     @OptIn(ExperimentalCoroutinesApi::class)
-    val uiState: StateFlow<IncomeUiState> = userId
+    val uiState: StateFlow<TransactionUiState> = userId
         .filterNotNull()
         .flatMapLatest {
             transactionRepository.getTransactions()
@@ -49,38 +48,34 @@ class IncomeViewModel @Inject constructor(
                     }
                     emit(emptyList())
                 }
-                .map { expenses ->
-                    expenses.filter {
-                        it.transactionType == TransactionType.INCOME
-                    }
-                }
         }
-        .combine(_uiState) { expenses, currentState ->
+        .combine(_uiState) { transactions, currentState ->
             currentState.copy(
-                incomes = expenses,
+                incomes = transactions.filter { it.transactionType == TransactionType.INCOME },
+                expenses = transactions.filter { it.transactionType == TransactionType.EXPENSE },
                 isLoading = false
             )
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            IncomeUiState()
+            TransactionUiState()
         )
 
 
-    private val _events = MutableSharedFlow<IncomeViewEffect>()
-    val events: SharedFlow<IncomeViewEffect> = _events
+    private val _events = MutableSharedFlow<TransactionViewEffect>()
+    val events: SharedFlow<TransactionViewEffect> = _events
 
-    fun onEvent(event: IncomeEvent) {
+    fun onEvent(event: TransactionEvent) {
         when (event) {
-            is IncomeEvent.OnSaveIncome -> saveExpense(
+            is TransactionEvent.OnSaveTransaction -> saveExpense(
                 event.description,
                 event.amount,
                 event.category
             )
 
-            IncomeEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
-            IncomeEvent.OnDismissAddDialog -> _uiState.update { it.copy(showAddDialog = false) }
+            TransactionEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
+            TransactionEvent.OnDismissAddDialog -> _uiState.update { it.copy(showAddDialog = false) }
         }
     }
 
@@ -101,8 +96,8 @@ class IncomeViewModel @Inject constructor(
                     transactionType = TransactionType.INCOME
                 )
                 transactionRepository.insertTransaction(transaction)
-            } catch (e: Exception) {
-                _events.emit(IncomeViewEffect.ShowError("error de guardado"))
+            } catch (_: Exception) {
+                _events.emit(TransactionViewEffect.ShowError("error de guardado"))
             }
         }
 }

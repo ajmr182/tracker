@@ -7,7 +7,4 @@ import kotlinx.serialization.Serializable
 sealed interface Route : NavKey
 
 @Serializable
-data object IncomeRoute : Route
-
-@Serializable
-data object ExpensesRoute : Route
+data object TransactionRoute : Route

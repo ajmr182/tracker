@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.ajmr.tracker.data.entity.Transaction
+import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
 import com.ajmr.tracker.ui.transaction.TransactionScreenContent
 import org.junit.Rule
@@ -21,14 +22,14 @@ class ExpenseScreenContentTest {
             Transaction(
                 amount = 20.0,
                 description = "parrilla",
-                category = "comida",
+                category = Categories.FOOD,
                 transactionType = TransactionType.EXPENSE,
                 date = 123456789
             ),
             Transaction(
                 amount = 20.0,
                 description = "taxi",
-                category = "transporte",
+                category = Categories.TRANSPORT,
                 transactionType = TransactionType.EXPENSE,
                 date = 123456789
             )
