@@ -69,9 +69,10 @@ class TransactionViewModel @Inject constructor(
     fun onEvent(event: TransactionEvent) {
         when (event) {
             is TransactionEvent.OnSaveTransaction -> saveExpense(
-                event.description,
-                event.amount,
-                event.category
+                description = event.description,
+                amount = event.amount,
+                transactionType = event.transactionType,
+                category = event.category
             )
 
             TransactionEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
@@ -86,6 +87,7 @@ class TransactionViewModel @Inject constructor(
     private fun saveExpense(
         description: String,
         amount: Double,
+        transactionType: TransactionType,
         category: Categories,
     ) = viewModelScope.launch {
             try {
@@ -93,7 +95,7 @@ class TransactionViewModel @Inject constructor(
                     amount = amount,
                     category = category,
                     description = description,
-                    transactionType = TransactionType.INCOME
+                    transactionType = transactionType
                 )
                 transactionRepository.insertTransaction(transaction)
             } catch (_: Exception) {

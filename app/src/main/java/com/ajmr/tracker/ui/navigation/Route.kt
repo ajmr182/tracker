@@ -8,3 +8,6 @@ sealed interface Route : NavKey
 
 @Serializable
 data object TransactionRoute : Route
+
+@Serializable
+data object BalanceRoute : Route

@@ -2,6 +2,8 @@
     <string name="app_name">tracker</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="amount">Amount</string>
+    <string name="income_menu">Income</string>
+    <string name="balance_menu">Balance</string>
     <string name="description">Description</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="save">Save</string>
@@ -24,4 +26,6 @@
     <string name="other_expenses">Other Expenses</string>
     <string name="total_balance">Total Balance</string>
     <string name="transactions">Transactions</string>
+    <string name="categories">Categories</string>
+    <string name="transaction_label">%1$s - %2$s</string>
 </resources>

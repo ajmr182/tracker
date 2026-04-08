@@ -16,7 +16,7 @@ import com.ajmr.tracker.ui.navigation.NavDisplay
 fun HomeScreen() {
 
     val backStack = rememberNavBackStack(TransactionRoute)
-    val bottomNavItems = listOf(HomeMenu.Income)
+    val bottomNavItems = listOf(HomeMenu.Income, HomeMenu.Balance)
 
     val currentDestination = backStack.lastOrNull()
 

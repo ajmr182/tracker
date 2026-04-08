@@ -74,7 +74,7 @@ class TransactionViewModelTest {
             date = 123456789
         )
 
-        viewModel.onEvent(TransactionEvent.OnSaveTransaction(transaction.description, transaction.amount, transaction.category))
+        viewModel.onEvent(TransactionEvent.OnSaveTransaction(transaction.description, transaction.amount, transaction.transactionType, transaction.category))
 
         advanceUntilIdle()
 
