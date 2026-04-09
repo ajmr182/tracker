@@ -27,8 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ajmr.tracker.R
+import com.ajmr.tracker.ui.formatAmountPe
 import com.ajmr.tracker.ui.theme.AppGreen
 import com.ajmr.tracker.ui.theme.AppRed
 
@@ -72,8 +74,11 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
 
 
             Text(
-                text = "S/ ${totalIncome - totalExpense}",
-                style = MaterialTheme.typography.headlineMedium
+                modifier = Modifier.padding(horizontal = 8.dp),
+                text = formatAmountPe(totalIncome - totalExpense),
+                style = MaterialTheme.typography.headlineMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -101,9 +106,11 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                     }
 
                     Text(
-                        text = "+S/ $totalIncome",
+                        text = formatAmountPe(totalIncome),
                         color = AppGreen,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 
@@ -128,9 +135,11 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                     }
 
                     Text(
-                        text = "-S/ $totalExpense",
+                        text = formatAmountPe(totalExpense),
                         color = AppRed,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }

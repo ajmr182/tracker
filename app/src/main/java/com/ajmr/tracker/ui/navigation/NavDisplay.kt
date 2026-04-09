@@ -8,6 +8,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.ajmr.tracker.ui.balance.BalanceScreen
 import com.ajmr.tracker.ui.transaction.IncomeScreen
 
 @Composable
@@ -19,6 +20,9 @@ fun NavDisplay(backStack: NavBackStack<NavKey>, paddingValues: PaddingValues) {
         entryProvider = entryProvider {
             entry<TransactionRoute> {
                 IncomeScreen()
+            }
+            entry<BalanceRoute> {
+                BalanceScreen()
             }
         }
     )
