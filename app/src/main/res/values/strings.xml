@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tracker</string>
+    <string name="app_name">Tracker</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="amount">Amount</string>
     <string name="income_menu">Income</string>
