@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tracker</string>
+    <string name="add_transaction">Añadir transacción</string>
+    <string name="amount">Monto</string>
+    <string name="income_menu">Ingreso</string>
+    <string name="balance_menu">Balance</string>
+    <string name="description">Descripción</string>
+    <string name="transaction_type">Tipo de Transacción</string>
+    <string name="save">Guardar</string>
+    <string name="income">Ingresos</string>
+    <string name="expense">Egresos</string>
+    <string name="salary">Salario</string>
+    <string name="services">Servicios</string>
+    <string name="investments">Inversiones</string>
+    <string name="gifts">Regalos</string>
+    <string name="refunds">Reembolsos</string>
+    <string name="other_incomes">Otros Ingresos</string>
+    <string name="food">Comida</string>
+    <string name="house">Casa</string>
+    <string name="transport">Transporte</string>
+    <string name="shopping">Compras</string>
+    <string name="entertainment">Entretenimiento</string>
+    <string name="health">Salud</string>
+    <string name="education">Educación</string>
+    <string name="credits">Crédito</string>
+    <string name="other_expenses">Otros Egresos</string>
+    <string name="total_balance">Balance Total</string>
+    <string name="transactions">Transacciones</string>
+    <string name="categories">Categorias</string>
+    <string name="transaction_label">%1$s - %2$s</string>
+</resources>
