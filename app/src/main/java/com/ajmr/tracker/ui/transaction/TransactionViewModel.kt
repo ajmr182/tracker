@@ -75,8 +75,8 @@ class TransactionViewModel @Inject constructor(
                 category = event.category
             )
 
-            TransactionEvent.OnAddClicked -> _uiState.update { it.copy(showAddDialog = true) }
-            TransactionEvent.OnDismissAddDialog -> _uiState.update { it.copy(showAddDialog = false) }
+            is TransactionEvent.OnAddClicked -> _uiState.update { it.copy(transactionType = event.transactionType) }
+            TransactionEvent.OnDismissAddDialog -> _uiState.update { it.copy(transactionType = null) }
         }
     }
 

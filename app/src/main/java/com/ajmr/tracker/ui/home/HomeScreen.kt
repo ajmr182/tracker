@@ -1,8 +1,10 @@
 package com.ajmr.tracker.ui.home
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +24,9 @@ fun HomeScreen() {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+            ) {
                 bottomNavItems.forEach { destination ->
 
                     val isSelected = currentDestination == destination.route
@@ -40,7 +44,14 @@ fun HomeScreen() {
                                 contentDescription = ""
                             )
                         },
-                        label = { Text(stringResource(destination.label)) }
+                        label = { Text(stringResource(destination.label)) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                        )
                     )
                 }
             }

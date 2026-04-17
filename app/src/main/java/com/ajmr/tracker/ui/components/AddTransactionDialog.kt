@@ -17,7 +17,6 @@ import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,24 +35,16 @@ import com.ajmr.tracker.domain.model.TransactionType
 @Composable
 fun AddTransactionTypeDialog(
     onDisMissRequest: () -> Unit,
+    transactionType: TransactionType,
     onSaveTransaction: (description: String, amount: Double, transactionType: TransactionType, category: Categories) -> Unit,
 ) {
 
     var description by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
 
-    val transactionTypes = TransactionType.entries
-    var transactionTypeSelected by remember { mutableStateOf(transactionTypes.first()) }
-
-    val categories by remember(transactionTypeSelected) {
-        derivedStateOf {
-            Categories.entries.filter { it.transactionType == transactionTypeSelected }
-        }
-    }
-
-    var selectedCategory by remember(transactionTypeSelected) {
-        mutableStateOf(categories.firstOrNull() ?: Categories.entries.first())
-    }
+    val categories: List<Categories> = Categories.entries.filter { it.transactionType == transactionType }
+    
+    var selectedCategory by remember { mutableStateOf(categories.first()) }
 
     var expandedTransaction by remember { mutableStateOf(false) }
     var expandedCategory by remember { mutableStateOf(false) }
@@ -103,7 +94,7 @@ fun AddTransactionTypeDialog(
                     onExpandedChange = { expandedTransaction = !expandedTransaction }
                 ) {
                     OutlinedTextField(
-                        value = stringResource(transactionTypeSelected.label),
+                        value = stringResource(transactionType.label),
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(stringResource(R.string.transaction_type)) },
@@ -117,21 +108,6 @@ fun AddTransactionTypeDialog(
                             )
                             .fillMaxWidth()
                     )
-
-                    ExposedDropdownMenu(
-                        expanded = expandedTransaction,
-                        onDismissRequest = { expandedTransaction = false }
-                    ) {
-                        transactionTypes.forEach { item ->
-                            DropdownMenuItem(
-                                text = { Text(stringResource(item.label)) },
-                                onClick = {
-                                    transactionTypeSelected = item
-                                    expandedTransaction = false
-                                }
-                            )
-                        }
-                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -180,7 +156,7 @@ fun AddTransactionTypeDialog(
                         onSaveTransaction(
                             description,
                             amount.toDouble(),
-                            transactionTypeSelected,
+                            transactionType,
                             selectedCategory
                         )
                         onDisMissRequest()
@@ -202,5 +178,6 @@ fun AddTransactionTypeDialogPreview() {
     AddTransactionTypeDialog(
         onDisMissRequest = {},
         onSaveTransaction = { description, amount, transactionType, category -> },
+        transactionType = TransactionType.EXPENSE,
     )
 }
