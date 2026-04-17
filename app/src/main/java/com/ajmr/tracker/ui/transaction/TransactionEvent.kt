@@ -12,7 +12,7 @@ sealed interface TransactionEvent {
         val category: Categories,
     ) : TransactionEvent
 
-    object OnAddClicked : TransactionEvent
+    data class OnAddClicked(val transactionType: TransactionType) : TransactionEvent
 
     object OnDismissAddDialog : TransactionEvent
 }

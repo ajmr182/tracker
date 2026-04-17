@@ -1,5 +1,6 @@
 package com.ajmr.tracker.ui.transaction.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.twotone.AccountBalanceWallet
 import androidx.compose.material.icons.twotone.ArrowDownward
 import androidx.compose.material.icons.twotone.ArrowUpward
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,14 +27,13 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ajmr.tracker.R
 import com.ajmr.tracker.ui.formatAmountPe
-import com.ajmr.tracker.ui.theme.AppGreen
-import com.ajmr.tracker.ui.theme.AppRed
+import com.ajmr.tracker.ui.theme.TrackerTheme
 
 @Composable
 fun BalanceCard(totalIncome: Double, totalExpense: Double) {
@@ -40,7 +41,13 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(6.dp),
+        border = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+        )
     ) {
         Column(
             modifier = Modifier
@@ -53,7 +60,7 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                 modifier = Modifier
                     .size(48.dp)
                     .background(
-                        color = Color(0xFF1976D2).copy(alpha = 0.1f),
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
@@ -61,7 +68,7 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                 Icon(
                     imageVector = Icons.TwoTone.AccountBalanceWallet,
                     contentDescription = null,
-                    tint = Color(0xFF1976D2)
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -69,7 +76,8 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
 
             Text(
                 text = stringResource(R.string.total_balance),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
 
@@ -77,13 +85,14 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                 modifier = Modifier.padding(horizontal = 8.dp),
                 text = formatAmountPe(totalIncome - totalExpense),
                 style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -99,15 +108,18 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                         Icon(
                             Icons.TwoTone.ArrowUpward,
                             contentDescription = null,
-                            tint = AppGreen
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text(stringResource(R.string.income))
+                        Text(
+                            stringResource(R.string.income),
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
                     }
 
                     Text(
                         text = formatAmountPe(totalIncome),
-                        color = AppGreen,
+                        color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -115,6 +127,7 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                 }
 
                 VerticalDivider(
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
                     modifier = Modifier
                         .height(50.dp)
                         .padding(horizontal = 8.dp)
@@ -128,15 +141,18 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                         Icon(
                             Icons.TwoTone.ArrowDownward,
                             contentDescription = null,
-                            tint = AppRed
+                            tint = MaterialTheme.colorScheme.error
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text(stringResource(R.string.expense))
+                        Text(
+                            stringResource(R.string.expense),
+                            color = MaterialTheme.colorScheme.error,
+                        )
                     }
 
                     Text(
                         text = formatAmountPe(totalExpense),
-                        color = AppRed,
+                        color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -144,5 +160,13 @@ fun BalanceCard(totalIncome: Double, totalExpense: Double) {
                 }
             }
         }
+    }
+}
+
+@Preview()
+@Composable
+fun BalanceCardPreview() {
+    TrackerTheme(dynamicColor = false) {
+        BalanceCard(totalIncome = 100.0, totalExpense = 50.0)
     }
 }

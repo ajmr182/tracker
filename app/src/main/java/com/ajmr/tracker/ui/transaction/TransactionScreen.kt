@@ -37,15 +37,16 @@ fun IncomeScreen() {
         else -> TransactionScreenContent(
             incomes = state.incomes,
             expenses = state.expenses,
-            onAddClicked = { viewModel.onEvent(TransactionEvent.OnAddClicked) },
+            onAddClicked = { transactionType ->  viewModel.onEvent(TransactionEvent.OnAddClicked(transactionType)) },
         )
     }
 
-    if (state.showAddDialog) {
+    state.transactionType?.let { transactionType ->
         AddTransactionTypeDialog(
             onDisMissRequest = {
                 viewModel.onEvent(TransactionEvent.OnDismissAddDialog)
             },
+            transactionType = transactionType,
             onSaveTransaction = { description, amount, transactionType, category ->
                 viewModel.onEvent(TransactionEvent.OnSaveTransaction(description, amount, transactionType, category))
             }

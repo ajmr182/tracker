@@ -25,28 +25,29 @@ import com.ajmr.tracker.R
 import com.ajmr.tracker.data.entity.Transaction
 import com.ajmr.tracker.domain.model.Categories
 import com.ajmr.tracker.domain.model.TransactionType
+import com.ajmr.tracker.domain.model.backgroundColor
+import com.ajmr.tracker.domain.model.color
 import com.ajmr.tracker.ui.formatAmountPe
 import com.ajmr.tracker.ui.formatTransactionDate
-import com.ajmr.tracker.ui.theme.AppGray
-import com.ajmr.tracker.ui.theme.AppWhite
+import com.ajmr.tracker.ui.theme.TrackerTheme
 
 @Composable
 fun SummaryContent(transaction: Transaction) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        border = BorderStroke(1.dp, color = AppGray)
+            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+        border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.outline)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.background(color = AppWhite)
+            modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
         ) {
             Box(
                 modifier = Modifier
                     .padding(8.dp)
                     .background(
-                        color = transaction.transactionType.color.copy(alpha = 0.1f),
+                        color = transaction.transactionType.backgroundColor(),
                         shape = CircleShape
                     )
             ) {
@@ -54,7 +55,7 @@ fun SummaryContent(transaction: Transaction) {
                     modifier = Modifier.padding(8.dp),
                     imageVector = transaction.category.imageVector,
                     contentDescription = "",
-                    tint = transaction.transactionType.color
+                    tint = transaction.transactionType.color()
                 )
             }
 
@@ -67,13 +68,15 @@ fun SummaryContent(transaction: Transaction) {
                     ),
                     style = MaterialTheme.typography.titleSmall,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = formatTransactionDate(transaction.date),
                     style = MaterialTheme.typography.bodySmall,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -81,7 +84,7 @@ fun SummaryContent(transaction: Transaction) {
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .widthIn(max = 120.dp),
-                color = transaction.transactionType.color,
+                color = transaction.transactionType.color(),
                 text = formatAmountPe(transaction.amount),
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
@@ -102,5 +105,7 @@ fun SummaryContentPreview() {
             date = 123456789
         )
 
-    SummaryContent(expenses)
+    TrackerTheme() {
+        SummaryContent(expenses)
+    }
 }
